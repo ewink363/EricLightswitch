@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 for (ToggleButton button : buttons) {
                     int number = (Integer) button.getTag();
-                    ToggleSwitch(number);
+                    ToggleSwitch(number, button.isChecked());
                 }
             }
         });
@@ -54,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
     public void ButtonClick(View view) {
         ToggleButton button = (ToggleButton) view;
         int number = (Integer) button.getTag();
-        boolean success = ToggleSwitch(number);
+        boolean success = ToggleSwitch(number, button.isChecked());
 
         if (!success)
         {
@@ -62,13 +62,13 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private boolean ToggleSwitch(int lightNumber)
+    private boolean ToggleSwitch(int switchNumber, boolean isActive)
     {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
         String piAddress = settings.getString("preference_ip_address", "");
 
         //String piAddress = getString(R.string.pi_ip_address);
-        String url = piAddress + "/toggle/" + lightNumber;
+        String url = piAddress + "/toggleSwitch/" + switchNumber + "/" isActive;
         String response = GetPostData(url);
         return true;
     }
